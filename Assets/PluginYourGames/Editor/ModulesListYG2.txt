@@ -1,0 +1,4 @@
+Authorization v1.023
+Payments v1.02
+PlayerStats v1.01
+RewardedAdv v1.011

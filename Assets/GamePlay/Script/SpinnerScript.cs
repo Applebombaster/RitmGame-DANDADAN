@@ -23,7 +23,7 @@ namespace GamePlay.Script
             var rotation = GameObject.FindGameObjectWithTag("Center").transform.rotation.eulerAngles.z;
             var rotate = Random.Range(-90, 90);
             var rot = (rotation + rotate) / 180 * Mathf.PI;
-            myRigidbody2D.velocity = new Vector2(Mathf.Cos(rot) * speed,
+            myRigidbody2D.linearVelocity = new Vector2(Mathf.Cos(rot) * speed,
                 Mathf.Sin(rot) * speed);
         }
 

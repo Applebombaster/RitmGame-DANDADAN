@@ -67,7 +67,7 @@ namespace GamePlay.Script
 
         private void Moving()
         {
-            myRigidbody2D.velocity = new Vector2(Mathf.Cos(rot) * speed, Mathf.Sin(rot) * speed);
+            myRigidbody2D.linearVelocity = new Vector2(Mathf.Cos(rot) * speed, Mathf.Sin(rot) * speed);
         }
     }
 }
