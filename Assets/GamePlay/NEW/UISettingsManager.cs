@@ -5,6 +5,9 @@ using UnityEngine.Video;
 
 public class UISettingsManager : MonoBehaviour
 {
+    [Header("Background")]
+    public SpriteRenderer backgroundRenderer; // Перетащи сюда объект с картинкой
+
     [Header("Audio Settings")]
     public Slider musicSlider;
     public Slider soundsSlider;
@@ -12,7 +15,6 @@ public class UISettingsManager : MonoBehaviour
 
     [Header("Video Settings")]
     public Slider blackoutSlider;
-    public VideoPlayer videoPlayer;
     public Camera targetCamera;
 
     [Header("Toggle Settings")]
@@ -46,7 +48,6 @@ public class UISettingsManager : MonoBehaviour
         // Применение начальных состояний
         UpdateToggleVisualEffects();
         UpdateToggleLiveWallpaper();
-        UpdateVideoState();
 
         // Установка начальных значений
         blackoutSlider.value = blackoutValue;
@@ -85,7 +86,6 @@ public class UISettingsManager : MonoBehaviour
         liveWallpaperEnabled = !liveWallpaperEnabled;
         PlayerPrefs.SetInt("LiveWallpaperEnabled", liveWallpaperEnabled ? 1 : 0);
         UpdateToggleLiveWallpaper();
-        UpdateVideoState();
     }
 
     private void UpdateToggleLiveWallpaper()
@@ -95,28 +95,19 @@ public class UISettingsManager : MonoBehaviour
         liveWallpaperTochka.anchoredPosition = new Vector2(xPos, liveWallpaperTochka.anchoredPosition.y);
     }
 
-    private void UpdateVideoState()
-    {
-        if (videoPlayer == null) return;
-
-        if (liveWallpaperEnabled)
-        {
-            if (!videoPlayer.isPlaying) videoPlayer.Play();
-        }
-        else
-        {
-            if (videoPlayer.isPlaying) videoPlayer.Pause();
-        }
-    }
-
     // Затемнение фона
     public void SetBlackoutAlpha(float alpha)
     {
-        if (videoPlayer != null && targetCamera != null)
+        if (backgroundRenderer == null)
         {
-            videoPlayer.targetCamera = targetCamera;
-            videoPlayer.targetCameraAlpha = alpha;
+            Debug.LogError("Не назначен backgroundRenderer в инспекторе!");
+            return;
         }
+
+        Color color = backgroundRenderer.color;
+        color.a = alpha;
+        backgroundRenderer.color = color;
+
         PlayerPrefs.SetFloat("BlackoutAlpha", alpha);
     }
 
